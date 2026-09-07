@@ -5,7 +5,7 @@
 This section explores the impact of **Software Prefetching** (via `_mm_prefetch`) coupled with cache tiling, *without* the use of SIMD instructions.
 
 ### 1. Matrix Size Effects
-
+(Arshit CPU)
 | Matrix Size | Naive Time (ms) | Prefetch Time (ms) | Speedup |
 | ----------: | --------------: | -----------------: | ------: |
 |   128 × 128 |           1.958 |              1.481 |  1.322× |
@@ -23,20 +23,20 @@ This section explores the impact of **Software Prefetching** (via `_mm_prefetch`
 ### 3. Effect of Hardware Prefetchers
 
 To truly isolate the effect of software prefetching, we disabled the CPU's built-in Hardware (HW) Prefetchers using MSR configuration (`wrmsr 0x1A4`).
-
+(Arshit CPU)
 | Configuration (Size=1024) | Naive Time (ms) | SW Prefetch Time (ms) | Speedup |
 |---------------------------|-----------------|-----------------------|---------|
 | **HW Prefetchers ON** | 1717.627 |  1704.488  | **1.01x** |
 | **HW Prefetchers OFF** | 1566.44 | 940.500 | **1.67x** |
 
 **Observation:**
-When HW prefetchers are **OFF**, the performance of the Naive kernel drops (execution time increases from 1087ms to 1123ms) because it suffers from massive cache misses. However, our Software Prefetch kernel maintains almost identical performance regardless of the HW prefetcher state. Consequently, the relative speedup jumps to **1.14x**. This proves that our `_mm_prefetch` instructions successfully perform the memory latency-hiding job that the hardware prefetcher normally does automatically.
+(Arshit CPU) SW prefetchers are powerful. We could get much better than hardware prefetching using prefetching according to our needs. When turning HW prefetechrs on , I guess the performance drops due to cache pollution.
 
 ---
 # Task 2B : SIMD (Single Instruction Multiple Data)
 
 ## System Configuration
-
+(Veeresh CPU)
 | Parameter | Value |
 |-----------|-------|
 | **CPU** | 11th Gen Intel Core i5-11300H @ 3.10GHz (Turbo 4.4GHz) |
@@ -53,7 +53,7 @@ When HW prefetchers are **OFF**, the performance of the Naive kernel drops (exec
 > **Methodology Note on Instruction Counts:** The benchmark harness (`main.cpp`) runs the baseline `naive` code and the evaluated `simd` stage multiple times in the same invocation (6 runs of naive + 5 runs of simd). To report the accurate *per-run* instruction counts, the raw `perf` output was algebraically separated:
 > - `Single Naive Run = perf_naive_total / 6`
 > - `Single SIMD Run = (perf_simd_total - perf_naive_total) / 5`
-
+(Veeresh CPU)
 | Metrics | | (128,128,128) | (256,256,256) | (512,512,512) | (1024,1024,1024) | (2048,2048,2048) |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **No SIMD** | Instructions (Millions) | 13.7 | 103.5 | 815.2 | 6,485.2 | 51,756.7 |
@@ -114,7 +114,7 @@ In Task 2C, we combine **Software Prefetching + AVX2 SIMD Vectorization** to dem
 
 ### 1. Optimal Prefetch Distance with SIMD
 When combined with SIMD, the optimal prefetch distance shifts:
-
+(Veeresh CPU)
 | Prefetch Distance | Speedup over Naive |
 |-------------------|--------------------|
 | 0 | 27.31x |
@@ -128,7 +128,7 @@ The optimal distance is **128 elements**. Because the SIMD loop consumes data 8 
 ### 2. Final Performance Summary (Synergistic Gains)
 
 The assignment requires demonstrating that the combined benefit is greater than the sum of individual optimizations. We compare the peak performance across varying matrix sizes:
-
+(Veeresh CPU)
 | Matrix Size | SW Prefetch Only (2A) | SIMD Only (2B) | Prefetch + SIMD + Tiling (2C) |
 |-------------|-----------------------|----------------|-------------------------------|
 | **256** | 0.95x | 13.12x | **22.86x** |
