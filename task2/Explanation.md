@@ -20,7 +20,7 @@ This section explores the impact of **Software Prefetching** (via `_mm_prefetch`
 
 ![Time vs Matrix Size](plots/prefetching.png)
 
-![Speedup vs Matrix Size](plots/prefetch_sppedup.png)
+![Speedup vs Matrix Size](plots/prefetch_speedup.png)
 
 ### 3. Effect of Hardware Prefetchers
 
