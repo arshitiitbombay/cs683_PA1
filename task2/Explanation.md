@@ -49,11 +49,11 @@ To truly isolate the effect of software prefetching, we disabled the CPU's built
 ---
 
 ## 1. Complete Benchmark Results (Table 2.1)
-
+(Veeresh CPU)
 > **Methodology Note on Instruction Counts:** The benchmark harness (`main.cpp`) runs the baseline `naive` code and the evaluated `simd` stage multiple times in the same invocation (6 runs of naive + 5 runs of simd). To report the accurate *per-run* instruction counts, the raw `perf` output was algebraically separated:
 > - `Single Naive Run = perf_naive_total / 6`
 > - `Single SIMD Run = (perf_simd_total - perf_naive_total) / 5`
-(Veeresh CPU)
+
 | Metrics | | (128,128,128) | (256,256,256) | (512,512,512) | (1024,1024,1024) | (2048,2048,2048) |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **No SIMD** | Instructions (Millions) | 13.7 | 103.5 | 815.2 | 6,485.2 | 51,756.7 |
