@@ -136,10 +136,24 @@ The assignment requires demonstrating that the combined benefit is greater than 
 | **1024** | 1.03x | 10.36x | **27.36x** |
 | **2048** | 1.03x | 5.88x | **25.20x** |
 
+
+### Prefetch Distance vs Speedup
+
+![Task 2C Prefetch Distance vs Speedup](plots/2c_speedup_v_prefetch.png)
+
+### Final Performance Comparison
+
+![Task 2C Final Performance Comparison](plots/2c_speedup_v_size.png)
+
 **Analysis of Synergistic Gains:**
 - **SIMD Only (Task 2B):** Suffered massive degradation at large sizes (dropping from 13x to 5.88x at size 2048) because it became memory-bound. It processed data faster than RAM could provide it.
 - **Prefetch Only (Task 2A):** Barely broke even (1.03x speedup) because while it fetched data efficiently, the CPU was still bottlenecked by scalar arithmetic limitations.
 - **Combined (Task 2C):** By applying cache tiling to localize data, prefetching to hide RAM latency, and AVX2 SIMD to process the local data rapidly, we achieved a sustained speedup of **~25x to 28x** across all large matrix sizes. 
+
+SIMD removes the compute bottleneck, while cache-tiling and prefetching remove the memory bottleneck. Neither optimization scales effectively to large matrices without the other. This is synergistic performance.
+
+---
+
 
 This is the definition of **synergistic performance**: SIMD removes the compute bottleneck, while cache-tiling and prefetching remove the memory bottleneck. Neither optimization scales effectively to large matrices without the other!
 
