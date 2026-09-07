@@ -155,7 +155,3 @@ SIMD removes the compute bottleneck, while cache-tiling and prefetching remove t
 ---
 
 
-This is the definition of **synergistic performance**: SIMD removes the compute bottleneck, while cache-tiling and prefetching remove the memory bottleneck. Neither optimization scales effectively to large matrices without the other!
-
----
-
