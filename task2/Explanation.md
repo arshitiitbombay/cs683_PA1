@@ -26,8 +26,8 @@ To truly isolate the effect of software prefetching, we disabled the CPU's built
 
 | Configuration (Size=1024) | Naive Time (ms) | SW Prefetch Time (ms) | Speedup |
 |---------------------------|-----------------|-----------------------|---------|
-| **HW Prefetchers ON** | 1087.6 | 990.6 | **1.10x** |
-| **HW Prefetchers OFF** | 1123.7 | 981.5 | **1.14x** |
+| **HW Prefetchers ON** | 1717.627 |  1704.488  | **1.01x** |
+| **HW Prefetchers OFF** | 1566.44 | 940.500 | **1.67x** |
 
 **Observation:**
 When HW prefetchers are **OFF**, the performance of the Naive kernel drops (execution time increases from 1087ms to 1123ms) because it suffers from massive cache misses. However, our Software Prefetch kernel maintains almost identical performance regardless of the HW prefetcher state. Consequently, the relative speedup jumps to **1.14x**. This proves that our `_mm_prefetch` instructions successfully perform the memory latency-hiding job that the hardware prefetcher normally does automatically.
