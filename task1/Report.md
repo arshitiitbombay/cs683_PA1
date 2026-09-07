@@ -75,7 +75,7 @@ Thus, a `32 × 32` tile comfortably fits within the 32 KB L1-D cache.
 
 - (Arshit )As tile size increase , speedup decreased. This I think is because of limit of the cache. We need ( T + P -1)^2 + K^2 elements , which should fit in cache for around 48 tile size also but that I think is the main point, cache being over the brim. 
 
-![Tiled Convolution Speedup vs Matrix Size](speedup_vs_matrix_size_tiling.png)
+![Tiled Convolution Speedup vs Matrix Size](figures/speedup_vs_matrix_size_tiling.png)
 
 *Figure 1: Tiled convolution speedup versus matrix size for several tile sizes.*
 
