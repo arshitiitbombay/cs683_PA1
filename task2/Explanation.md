@@ -4,7 +4,7 @@
 
 This section explores the impact of **Software Prefetching** (via `_mm_prefetch`) coupled with cache tiling, *without* the use of SIMD instructions.
 
-### 1. Identifying Optimal Parameters
+### 1. Matrix Size Effects
 
 | Matrix Size | Naive Time (ms) | Prefetch Time (ms) | Speedup |
 | ----------: | --------------: | -----------------: | ------: |
@@ -19,20 +19,6 @@ This section explores the impact of **Software Prefetching** (via `_mm_prefetch`
 **Observation:** We get a speedup increasing with size.
 
 
-
-### 2. Impact of Matrix Size
-
-Using the optimal parameters (`Hint=T0`, `Dist=64/128`), we swept across matrix sizes:
-
-| Matrix Size | Speedup over Naive |
-|-------------|--------------------|
-| 256 | 0.95x |
-| 512 | 0.95x |
-| 1024 | 1.03x |
-| 2048 | 1.03x |
-
-**What trend do you observe?**
-At small matrix sizes (256, 512) where the working sets fit largely within the L2/L3 caches, software prefetching introduces unnecessary instruction overhead, resulting in a **slowdown (0.95x)**. As the matrix size grows beyond cache capacity (1024, 2048), software prefetching begins to provide a marginal **speedup (1.03x - 1.06x)** by hiding main memory latency. 
 
 ### 3. Effect of Hardware Prefetchers
 
