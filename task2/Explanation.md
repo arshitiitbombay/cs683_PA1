@@ -139,12 +139,11 @@ The best results obtained from software prefetching, SIMD, and their combined im
 | **2048**        | 1.03x                      | 5.88x              | **25.20x**                        |
 
 ### Prefetch Distance vs Speedup
-
-[Task 2C Prefetch Distance vs Speedup](plots/2c_speedup_v_prefetch.png)
+![Task 2C Prefetch Distance vs Speedup](plots/2c_speedup_v_prefetch.png)
 
 ### Final Performance Comparison
 
-[Task 2C Final Performance Comparison](plots/2c_speedup_v_size.png)
+![Task 2C Final Performance Comparison](plots/2c_speedup_v_size.png)
 
 ### Analysis
 
