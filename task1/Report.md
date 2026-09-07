@@ -79,7 +79,7 @@ Thus, a `32 × 32` tile comfortably fits within the 32 KB L1-D cache.
 
 *Figure 1: Tiled convolution speedup versus matrix size for several tile sizes.*
 
-![L1-D MPKI vs Matrix Size](l1d_mpki_vs_matrix_size_tiling.png)
+![L1-D MPKI vs Matrix Size](figures/l1d_mpki_vs_matrix_size_tiling.png)
 
 *Figure 7: L1-D MPKI versus matrix size for different tile sizes.*
 
@@ -98,7 +98,7 @@ Thus, a `32 × 32` tile comfortably fits within the 32 KB L1-D cache.
 - simd intrinsics used :
    _mm256_fmadd_ps : acc += k * val ; good rather than multiplying and adding , a single hardware intr might be better
 
-![SIMD Speedup vs Matrix Size](simd_speedup_vs_matrix_size.png)
+![SIMD Speedup vs Matrix Size](figures/simd_speedup_vs_matrix_size.png)
 
 *Figure 2: SIMD speedup versus matrix size for 128-bit and 256-bit implementations.*
 
@@ -117,19 +117,19 @@ For K =3 ( which is to be graded , right ? : | ) , we do unrolling + simd + hint
 
 - Graphs indicate high increment when k=3. For k=5 and 7 better than simd by +2.0x ( around )
 
-![Optimization Speedup vs Matrix Size (K=3)](speedup_K3.png)
+![Optimization Speedup vs Matrix Size (K=3)](figures/speedup_K3.png)
 
 *Figure 5: Overall optimization comparison for K=3.*
 
-![Optimization Speedup vs Matrix Size (K=5)](speedup_K5.png)
+![Optimization Speedup vs Matrix Size (K=5)](figures/speedup_K5.png)
 
 *Figure 4: Overall optimization comparison for K=5.*
 
-![Optimization Speedup vs Matrix Size (K=7)](speedup_K7.png)
+![Optimization Speedup vs Matrix Size (K=7)](figures/speedup_K7.png)
 
 *Figure 3: Overall optimization comparison for K=7.*
 
-![Optimization Comparison at 512x512, K=3](final_comparison_histogram.png)
+![Optimization Comparison at 512x512, K=3](figures/final_comparison_histogram.png)
 
 *Figure 6: Direct optimization comparison at 512×512 with K=3.*
 
