@@ -121,15 +121,15 @@ AVX-512 drastically outperforms the narrower widths (reaching almost 2x the spee
 
 ### Execution Time vs Matrix Size
 
-![Execution Time vs Matrix Size](plots/2b_time_v_size.png)
+![Execution Time vs Matrix Size](plots/2b_time_v_size.jpeg)
 
 ### SIMD Speedup vs Matrix Size
 
-![SIMD Speedup vs Matrix Size](plots/2b_speedup_v_size.png)
+![SIMD Speedup vs Matrix Size](plots/2b_speedup_v_size.jpeg)
 
 ### Instruction Count vs Matrix Size
 
-![Instruction Count vs Matrix Size](plots/2b_instr_v_size.png)
+![Instruction Count vs Matrix Size](plots/2b_instr_v_size.jpeg)
 
 ---
 
