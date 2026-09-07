@@ -119,6 +119,18 @@ The **maximum absolute speedup of 26.18x** was achieved using the **AVX-512 (512
 
 AVX-512 drastically outperforms the narrower widths (reaching almost 2x the speedup of AVX2 at peak efficiency) because it processes 16 single-precision floats per instruction and leverages Fused Multiply-Add (FMA) to perform both multiplication and addition simultaneously across all 16 floats.
 
+### Execution Time vs Matrix Size
+
+![Execution Time vs Matrix Size](plots/2b_time_v_size.png)
+
+### SIMD Speedup vs Matrix Size
+
+![SIMD Speedup vs Matrix Size](plots/2b_speedup_v_size.png)
+
+### Instruction Count vs Matrix Size
+
+![Instruction Count vs Matrix Size](plots/2b_instr_v_size.png)
+
 ---
 
 
