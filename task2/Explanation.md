@@ -109,51 +109,52 @@ AVX-512 drastically outperforms the narrower widths (reaching almost 2x the spee
 ---
 
 
+## Task 2C: Software Prefetching + SIMD
 
-## Task 2C: Software Prefetching + SIMD (Synergistic Optimization)
-
-In Task 2C, we combine **Software Prefetching + AVX2 SIMD Vectorization** to demonstrate synergistic performance gains.
+In Task 2C, software prefetching and AVX2 SIMD vectorization are applied together. The experiments were performed to study the effect of prefetch distance and to compare the combined optimization with the individual optimizations from Tasks 2A and 2B.
 
 ### 1. Optimal Prefetch Distance with SIMD
-When combined with SIMD, the optimal prefetch distance shifts:
-(Veeresh CPU)
-| Prefetch Distance | Speedup over Naive |
-|-------------------|--------------------|
-| 0 | 27.31x |
-| 32 | 25.85x |
-| 64 | 27.16x |
-| **128** | **28.08x** |
-| 256 | 27.23x |
 
-The optimal distance is **128 elements**. Because the SIMD loop consumes data 8 times faster than the scalar loop, fetching further ahead is critical to keep the execution units fed.
+The prefetch distance was varied while using AVX2 SIMD. The measured speedups are shown below.
 
-### 2. Final Performance Summary (Synergistic Gains)
+| **Prefetch Distance** | **Speedup over Naive** |
+|------------------------|------------------------|
+| 0                      | 27.31x                 |
+| 32                     | 25.85x                 |
+| 64                     | 27.16x                 |
+| **128**                | **28.08x**             |
+| 256                    | 27.23x                 |
 
-The assignment requires demonstrating that the combined benefit is greater than the sum of individual optimizations. We compare the peak performance across varying matrix sizes:
-(Veeresh CPU)
-| Matrix Size | SW Prefetch Only (2A) | SIMD Only (2B) | Prefetch + SIMD + Tiling (2C) |
-|-------------|-----------------------|----------------|-------------------------------|
-| **256** | 0.95x | 13.12x | **22.86x** |
-| **512** | 0.95x | 11.42x | **26.68x** |
-| **1024** | 1.03x | 10.36x | **27.36x** |
-| **2048** | 1.03x | 5.88x | **25.20x** |
+The highest measured speedup is **28.08x at a prefetch distance of 128 elements**. Therefore, 128 elements was selected as the prefetch distance for the final combined implementation.
 
+### 2. Final Performance Comparison
+
+The best results obtained from software prefetching, SIMD, and their combined implementation are compared below.
+
+| **Matrix Size** | **SW Prefetch Only (2A)** | **SIMD Only (2B)** | **Prefetch + SIMD + Tiling (2C)** |
+|-----------------|---------------------------:|-------------------:|----------------------------------:|
+| **256**         | 0.95x                      | 13.12x             | **22.86x**                        |
+| **512**         | 0.95x                      | 11.42x             | **26.68x**                        |
+| **1024**        | 1.03x                      | 10.36x             | **27.36x**                        |
+| **2048**        | 1.03x                      | 5.88x              | **25.20x**                        |
 
 ### Prefetch Distance vs Speedup
 
-![Task 2C Prefetch Distance vs Speedup](plots/2c_speedup_v_prefetch.png)
+[Task 2C Prefetch Distance vs Speedup](plots/2c_speedup_v_prefetch.png)
 
 ### Final Performance Comparison
 
-![Task 2C Final Performance Comparison](plots/2c_speedup_v_size.png)
+[Task 2C Final Performance Comparison](plots/2c_speedup_v_size.png)
 
-**Analysis of Synergistic Gains:**
-- **SIMD Only (Task 2B):** Suffered massive degradation at large sizes (dropping from 13x to 5.88x at size 2048) because it became memory-bound. It processed data faster than RAM could provide it.
-- **Prefetch Only (Task 2A):** Barely broke even (1.03x speedup) because while it fetched data efficiently, the CPU was still bottlenecked by scalar arithmetic limitations.
-- **Combined (Task 2C):** By applying cache tiling to localize data, prefetching to hide RAM latency, and AVX2 SIMD to process the local data rapidly, we achieved a sustained speedup of **~25x to 28x** across all large matrix sizes. 
+### Analysis
 
-SIMD removes the compute bottleneck, while cache-tiling and prefetching remove the memory bottleneck. Neither optimization scales effectively to large matrices without the other. This is synergistic performance.
+The combined implementation gives substantially higher speedups than either software prefetching or SIMD alone for all tested matrix sizes.
 
+Software prefetching alone provides only a small improvement, with speedups between **0.95x and 1.03x**. SIMD alone provides much larger improvements, but its speedup decreases from **13.12x at matrix size 256 to 5.88x at 2048**.
+
+With prefetching, SIMD, and cache tiling applied together, the measured speedups are between **22.86x and 27.36x**, with **27.36x** being the highest result at matrix size 1024. At matrix size 2048, the combined implementation still achieves **25.20x** speedup compared with the naive implementation.
+
+Overall, combining the optimizations provides better performance across the tested matrix sizes than using either optimization individually.
 ---
 
 
