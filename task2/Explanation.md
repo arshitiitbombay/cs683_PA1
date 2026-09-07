@@ -20,6 +20,8 @@ This section explores the impact of **Software Prefetching** (via `_mm_prefetch`
 
 ![Time vs Matrix Size](plots/prefetching.png)
 
+![Speedup vs Matrix Size](plots/prefetch_sppedup.png)
+
 ### 3. Effect of Hardware Prefetchers
 
 To truly isolate the effect of software prefetching, we disabled the CPU's built-in Hardware (HW) Prefetchers using MSR configuration (`wrmsr 0x1A4`).
