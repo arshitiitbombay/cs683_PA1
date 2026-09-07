@@ -6,30 +6,17 @@ This section explores the impact of **Software Prefetching** (via `_mm_prefetch`
 
 ### 1. Identifying Optimal Parameters
 
-**Cache Fill Level Sweep (Matrix Size: 1024, Distance: 64)**
-| Cache Hint Level | Speedup over Naive |
-|------------------|--------------------|
-| **_MM_HINT_T0 (L1)** | **1.06x** |
-| _MM_HINT_T1 (L2) | 0.97x |
-| _MM_HINT_T2 (L3) | 0.96x |
-| _MM_HINT_NTA (Non-Temporal) | 0.81x |
+| Matrix Size | Naive Time (ms) | Prefetch Time (ms) | Speedup |
+| ----------: | --------------: | -----------------: | ------: |
+|   128 × 128 |           1.958 |              1.481 |  1.322× |
+|   256 × 256 |          19.873 |             13.491 |  1.473× |
+|   512 × 512 |         161.261 |             97.575 |  1.653× |
+| 1024 × 1024 |        1251.857 |            841.779 |  1.487× |
+| 2048 × 2048 |       12724.971 |           7564.337 |  1.682× |
 
-**Observation:** Pre-fetching directly into the L1 cache (`T0`) yields the best performance. Fetching into L2/L3 or bypassing the cache hierarchy (`NTA`) degrades performance, as the naive scalar loop requires immediate and repeated access to the data elements in the fastest level of the memory hierarchy.
+**Strategy:** Use a K x K tile and when you are working on the first element prefetch the next tile. 
 
-**Possible Explanation**
-As we go from T0 to T1 to T2 to NTA , the hint decrease in form of an urgency ( as per internet ). So, For this value of prefetch (64 ) , it might happen that the time from L2 to L1 gets added decresing the speedup.
-
-**Prefetch Distance Sweep (Matrix Size: 1024, Hint: T0)**
-| Prefetch Distance (elements) | Speedup over Naive |
-|------------------------------|--------------------|
-| 0 | 1.04x |
-| 16 | 1.04x |
-| 32 | 1.04x |
-| 64 | 0.99x |
-| **128** | **1.06x** |
-| 256 | 1.04x |
-
-**Observation:** The optimal prefetch distance is **128 elements**. Fetching too close (0-32) doesn't hide the memory latency sufficiently, while fetching too far (256) causes cache eviction before the data is actually used.
+**Observation:** We get a speedup increasing with size.
 
 
 
